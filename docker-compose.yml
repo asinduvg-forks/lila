@@ -1,0 +1,12 @@
+services:
+  scala-app:
+    # image: asinduvg/essemblyx-scala
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lila-scala-app
+    stdin_open: true
+    tty: true
+    # volumes:
+    #   - .:/root/lila
+    command: ["tail", "-f", "/dev/null"]

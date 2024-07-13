@@ -1,0 +1,10 @@
+.bloop
+.bsp
+.metals
+.pnpm-store
+.vscode
+node_modules
+dist
+.dockerignore
+Dockerfile
+docker-compose.yml
