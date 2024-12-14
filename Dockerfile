@@ -24,9 +24,13 @@ RUN curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | gpg -o /usr/s
     apt-get update && apt-get install -y mongodb-org && mkdir -p /data/db
 ENV DEBIAN_FRONTEND=dialog
 
+# RUN mongod --port 27017 --dbpath /var/lib/mongodb --logpath /var/log/mongodb/mongod.log --fork && sleep 10
+
 COPY . lila/
     
-# mongosh mongodb://localhost:27017/lichess < lila/bin/mongodb/indexes.js 
+# RUN mongosh mongodb://localhost:27017/lichess < lila/bin/mongodb/indexes.js
 
-# ui/build --> build client
+# build client
+WORKDIR /root/lila
+# RUN ui/build 
 

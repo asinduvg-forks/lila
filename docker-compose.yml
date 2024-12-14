@@ -3,10 +3,41 @@ services:
     # image: asinduvg/essemblyx-scala
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.sbt.dockerfile
     container_name: lila-scala-app
     stdin_open: true
     tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+    depends_on:
+      mongodb:
+        condition: service_healthy
     # volumes:
     #   - .:/root/lila
     command: ["tail", "-f", "/dev/null"]
+  mongodb:
+    build:
+      context: .
+      dockerfile: Dockerfile.mongo.dockerfile
+    container_name: lila-mongodb
+    # restart: always
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    ports:
+      - "27017:27017"
+  # ui:
+  #   build:
+  #     context: docker
+  #     dockerfile: ui.dockerfile
+  #   container_name: lila-ui
+    # restart: always
+    # ports:
+    #   - "3000:3000"
+    # depends_on:
+    #   - mongodb
